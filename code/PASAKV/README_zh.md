@@ -18,3 +18,7 @@ pytest
 ~~~
 
 参考 Top-k 层集仅供对应 checkpoint 的复核，正式运行须从 frozen Probe100 ranking 选择。论文承诺的 FastWAM checkpoint 将另行发布到 Hugging Face，本仓库不含 .pt。当前未设置许可证；公开前须选定并检查上游许可兼容性。
+
+## 接入示例与扩展说明
+
+[examples/run_pipeline.py](examples/run_pipeline.py) 提供可调用的两阶段训练示例，保存排名、选中层、样本标识和最终 RGB patch。在本目录安装方法包后，由调用方提供上游模型适配器及数据。详细输入、随机性配对与输出说明见[接入文档](../../docs/integration.md)；完整结果和诊断见[结果文档](../../docs/results.md)。

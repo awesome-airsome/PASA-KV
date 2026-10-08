@@ -1,62 +1,82 @@
 # PASA-KV: Attacking Action-Facing Visual Routes in World Action Models
 
-PASA-KV probes action-facing visual key/value (K/V) routes in world action models, selects vulnerable routes with Tail-AV, and trains a fresh task-shared patch on the selected layers. The figures below are taken from the supplied manuscript PDF so the README follows the paper's current figures and color palette.
+**Which visual routes matter to robot actions?** PASA-KV uses short probes and the Tail-AV score to locate action-facing key/value (K/V) routes, then trains a fresh task-shared RGB patch against those routes.
+
+Internal representation change, action response, and closed-loop task failure are different quantities. Our experiments show that target-layer choice strongly affects control outcomes, and that short readout-aware probes can identify useful attack targets without using rollout success for selection.
+
+[Method and integration guide](docs/integration.md) · [Full results and diagnostics](docs/results.md) · [Reference code](code/PASAKV) · [中文代码说明](code/PASAKV/README_zh.md)
+
+## How the method works
+
+1. **Probe:** optimize a small RGB patch for each candidate layer using visual K/V displacement.
+2. **Select:** score paired clean/patched action-facing readouts with Tail-AV on held-out observations. No rollout success labels enter selection.
+3. **Train fresh:** discard probe patches and initialize a new patch for the selected Top-k routes.
+4. **Evaluate:** overlay the patch on the current camera observation at every replan and measure closed-loop task success.
+
+<p align="center"><img src="assets/figures/paper-2026-09/fig2_pipeline.png" alt="PASA-KV action-facing visual K/V interface and probe-select-train pipeline" width="900"></p>
+
+**What is modified?** The optimized object is an RGB patch. Internal K/V tensors provide the training loss; victim weights remain frozen. At deployment, the patch modifies camera pixels. Keys determine where action queries read, and values determine the content they receive. Large K/V displacement alone need not produce a large behavioral effect.
+
+## Why route selection matters
+
+Under matched FastWAM conditions, Tail-AV obtains **1.5% policy success**, versus **47.5%** for selecting layers by probe K/V displacement. These comparisons fix the loss, target count, geometry, and training budget, directly testing the contribution of layer selection.
+
+<p align="center"><img src="assets/figures/readme/selection_controls.svg" alt="Matched Table 2 controls: Tail-AV 1.5%, probe K/V displacement 47.5%, and evenly spaced or random selection 18.5–86.5% policy success" width="100%"></p>
+
+[Table 2 source values](assets/figures/readme/table2_selection.csv). This Eval200 comparison is separate from the primary Eval500 results below.
 
 ## Main results
 
-This chart re-renders the paper's primary comparison (Table 1) as bars. The upper row compares policy success across FastWAM, LingBot-VA, and Cosmos Policy; lower success means a stronger attack. The lower row shows recorded construction cost in GPU-hours. Each model panel has its own cost scale. FastWAM Top-k costs include Probe100, as in the paper.
+Policy success rate (SR) is the robot's task success rate: **lower SR means a stronger attack**. PASA-KV Top-5 reaches 0.0% on FastWAM, 87.2% on LingBot-VA, and 89.2% on Cosmos Policy. The smaller changes on the latter two systems are part of the finding; Cosmos Top-5 ties several baselines.
 
-<p align="center">
-  <img src="assets/figures/paper-main-results/table1_results.svg" alt="Paper Table 1 as bar charts: policy success rate and construction GPU-hours for FastWAM, LingBot-VA, and Cosmos Policy" width="100%">
-</p>
+<p align="center"><img src="assets/figures/readme/main_success.svg" alt="Table 1 policy success across FastWAM, LingBot-VA, and Cosmos Policy; PASA-KV rows highlighted in coral" width="100%"></p>
 
-Source data: [Table 1 values](assets/figures/paper-main-results/table1_results.csv) · [chart source](assets/figures/paper-main-results/plot_table1.py).
+| Evaluated system | Action-facing interface | Context for interpreting results |
+| --- | --- | --- |
+| FastWAM | Direct action generation reads visual K/V | Strong attack effects on the evaluated checkpoint |
+| LingBot-VA | Visual prediction precedes action generation through cached K/V | Smaller success degradation under its evaluated protocol |
+| Cosmos Policy | Actions and visual states interact in joint denoising | Top-5 ties the lowest observed SR in the comparison |
 
-## Main-paper figures
-
-<p align="center">
-  <img src="assets/figures/paper-2026-09/fig1_layerwise.png" alt="Paper Figure 1: layerwise evidence for action-facing vulnerability, including policy success rates, Tail-AV scores, and attack-budget trajectories" width="900">
-</p>
-<p align="center"><em>Figure 1 · Layerwise evidence for action-facing vulnerability.</em></p>
-
-<p align="center">
-  <img src="assets/figures/paper-2026-09/fig2_pipeline.png" alt="Paper Figure 2: PASA-KV action-facing K/V attack surface and probe-select-train pipeline" width="900">
-</p>
-<p align="center"><em>Figure 2 · PASA-KV construction pipeline.</em></p>
-
-<p align="center">
-  <img src="assets/figures/paper-2026-09/fig3_diagnostics.png" alt="Paper Figure 3: action-response diagnostics across FastWAM, LingBot-VA, and Cosmos Policy" width="900">
-</p>
-<p align="center"><em>Figure 3 · Action-response diagnostics across models and intervention settings.</em></p>
+These are system-level comparisons covering one checkpoint per architecture, with architecture-specific interfaces and settings. They do not establish a causal explanation for the resistance differences. [Recorded GPU-hours, full tables, and diagnostics](docs/results.md) provide additional context.
 
 ## Real-robot evaluation
 
-Experiments use an AgileX Piper arm with head and wrist RGB cameras. The scene figure pairs each initial scene with a representative annotated reference-rollout frame; it illustrates task setup and approximate progress, not complete trajectories.
+On a separately trained AgileX Piper FastWAM checkpoint, the full probe–select–train procedure was rerun. One patch per Top-k condition was shared across tasks and digitally overlaid on the current head-camera image at each replan; the wrist view remained unchanged.
 
-<p align="center">
-  <img src="assets/figures/piper-real-robot/piper_task_scenes.png" alt="Piper real-robot tasks: place a pen in a cup, put blocks in a second drawer, place a carrot in a bowl, and stack three bowls" width="900">
-</p>
-<p align="center"><em>Real-robot task scenes and representative reference-rollout frames (paper Figure 13).</em></p>
+<p align="center"><img src="assets/figures/piper-real-robot/piper_task_scenes.png" alt="Piper initial task scenes paired with representative annotated reference-rollout frames" width="900"></p>
 
-The chart below turns the paper's real-robot result tables into bars. Table 3 shows clean, Top-3, and Top-5 success over three tasks; Table 36 compares methods on bowl stacking. Each condition has 10 trials, and whiskers show 95% Wilson intervals. Table 36 uses method-specific patch geometries, so it is a shared-task comparison rather than a matched-geometry ranking.
+These scene pairs illustrate task setup and reference progress. They are not clean-versus-attack demonstrations. The four-task training suite includes a drawer task, but the reported attack comparison covers the three tasks with nonzero clean success.
 
-<p align="center">
-  <img src="assets/figures/piper-real-robot/piper_results.svg" alt="Real-robot success rates from paper Tables 3 and 36, including per-task PASA-KV Top-3 and Top-5 effects and bowl-stacking baseline comparison" width="100%">
-</p>
+<p align="center"><img src="assets/figures/readme/robot_success.svg" alt="Three Piper tasks: clean successes 10/10, 4/10, 6/10; Top-3 0/10, 2/10, 4/10; Top-5 0/10 on all three" width="100%"></p>
 
-Source tables: [Table 3 data](assets/figures/piper-real-robot/table3_task_results.csv) · [Table 36 data](assets/figures/piper-real-robot/table36_bowl_baselines.csv) · [chart source](assets/figures/piper-real-robot/plot_piper_results.py).
+Each condition has 10 trials. [Per-task data](assets/figures/piper-real-robot/table3_task_results.csv), [Wilson intervals and bowl-stacking baseline comparison](docs/results.md) are available separately. Baseline coverage is limited to bowl stacking, and its patch geometries differ by method.
 
-## Code
-
-The anonymous reference implementation is in [`code/PASAKV`](code/PASAKV). Start with its [English README](code/PASAKV/README.md), [Chinese README](code/PASAKV/README_zh.md), and [NOTICE](code/PASAKV/NOTICE.md).
+## Use the reference implementation
 
 ```bash
 cd code/PASAKV
-python -m pip install -e ".[test]"
+python -m pip install -e .
 ```
 
-Model adapters, model weights, datasets, and simulator assets are not included. This repository provides the core method interfaces and CPU-level tests, but is not an end-to-end reproduction environment.
+The package includes Tail-AV scoring, task-balanced sampling, rectangular patch overlay, Probe100 orchestration, fresh Top-k training, and evaluation-grid checks. Integrating a victim model requires implementing the adapter contract and supplying model/data dependencies.
+
+```python
+from examples.run_pipeline import run_pipeline
+
+# adapter and data providers come from your upstream integration.
+selected, result = run_pipeline(
+    adapter=adapter,
+    probe_example_at=probe_example_at,
+    scoring_examples_by_task=scoring_manifest,
+    final_example_at=final_example_at,
+    output_dir="outputs/fastwam_top3",
+    top_k=3,
+    device="cuda",
+)
+```
+
+The example saves the ranking, selected layers, sample identifiers, and RGB patch tensor. [Integration guide](docs/integration.md) explains the inputs, pairing requirements, and outputs. Model adapters, model weights, datasets, and simulator assets are external; installing this package alone does not reproduce the full paper experiments.
 
 ## Paper and release status
 
-The manuscript is under review; a public preprint and citation entry will be added when available. This anonymous method snapshot has no assigned open-source license yet. Review upstream compatibility and figure permissions before a public release.
+The manuscript is under review. A public preprint and citation will be added when available. This anonymous method reference snapshot has no assigned open-source license yet.

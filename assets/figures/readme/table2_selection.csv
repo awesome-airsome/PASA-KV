@@ -1,0 +1,7 @@
+selection,successes,trials,policy_sr
+Probe-K/V,95,200,47.5
+Evenly spaced,37,200,18.5
+Random-1,173,200,86.5
+Random-2,127,200,63.5
+Random-3,50,200,25.0
+Tail-AV,3,200,1.5

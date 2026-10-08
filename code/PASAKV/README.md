@@ -29,6 +29,8 @@ Reference Top-k sets in configs are validation values only. Real runs must deriv
 
 Model implementations, checkpoints, data, and simulator assets are not vendored. Implement PASAAdapter against each separately installed upstream framework. It must return post-transform, attention-ready Q/K/V over the complete key dimension, a broadcastable valid-key mask and additive attention bias, and actual visual-token indices. Clean and patched forwards must share the observation, prompt, state, solver schedule, and saved/replayed stochastic tensors; a shared global seed alone does not prove randomness is paired. Probe-training and scoring sample IDs are checked for overlap; final training rejects any ID in the frozen scoring set.
 
+For a callable integration example that saves the ranking and final RGB patch, see [examples/run_pipeline.py](examples/run_pipeline.py) and the [integration guide](../../docs/integration.md). Run it from this directory after installing the method package.
+
 Example orchestration requires an adapter and data provider:
 
 ~~~python
