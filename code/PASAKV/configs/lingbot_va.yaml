@@ -1,0 +1,47 @@
+architecture: lingbot_va
+checkpoint_env: PASA_KV_LINGBOT_CHECKPOINT
+candidate_layers: [0, 30] # half-open range [start, end)
+patch:
+  size_hw: [29, 29]
+  xy: [3, 91]
+  view: current_agent_view
+  training_clip_frame: 0
+  deployment: each_current_observation
+inference:
+  video_steps: 1
+  video_flow_endpoint: 0.6
+  action_steps: 10
+method:
+  probe_exposures_per_layer: 100
+  scoring_pairs_per_task: 1
+  tail_fraction: 0.005
+  probe_objective: relative_joint_kv
+  final_objective: mean_selected_layer_relative_joint_kv
+  final_exposures: 10000
+  batch_size: 1
+  fresh_final_patch: true
+  discard_probe_optimizer_state: true
+optimizer:
+  name: AdamW
+  learning_rate: 0.0005
+  betas: [0.9, 0.95]
+  epsilon: 1.0e-8
+  weight_decay: 0.01
+  schedule: constant
+  gradient_clipping: false
+  gradient_accumulation: 1
+patch_pixels:
+  initialization: uniform_0_1
+  clamp_after_each_update: [0.0, 1.0]
+  image_l1_weight: 0.0
+seeds:
+  final_train_seed: 42
+  eval_seed: 42
+evaluation:
+  suite: libero_10
+  trials_per_task: 50
+  trial_ids: [0, 49] # inclusive reference range
+reference_topk_layers:
+  top3: [21, 2, 1]
+  top4: [21, 2, 1, 3]
+  top5: [21, 2, 1, 3, 27]

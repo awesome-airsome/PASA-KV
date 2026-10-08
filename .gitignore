@@ -1,0 +1,22 @@
+# Local system and development files
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Local navigation generated during migration
+任务索引_*.md
+
+# Local credentials and large experiment artifacts
+.env
+.env.*
+*.pem
+*.key
+*.pt
+*.pth
+*.ckpt

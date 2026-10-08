@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PASA-KV studies action-facing K/V routes in world-action models.">
+  <title>PASA-KV | Action-facing K/V routes in world-action models</title>
+  <style>
+    :root { color-scheme: light; --ink:#17222e; --muted:#586879; --blue:#136b8a; --line:#d8e2e9; --paper:#f4f8fa; --white:#fff; --mint:#dff3ef; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); line-height:1.65; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .wrap { width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+    header { border-bottom:1px solid var(--line); background:rgba(255,255,255,.9); }
+    .nav { min-height:68px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { font-weight:800; letter-spacing:.03em; font-size:1.15rem; }
+    nav { display:flex; flex-wrap:wrap; gap:20px; font-size:.93rem; }
+    .hero { padding:72px 0 54px; }
+    .hero-grid { display:grid; grid-template-columns:1fr 1.05fr; align-items:center; gap:48px; }
+    .eyebrow { text-transform:uppercase; letter-spacing:.14em; color:var(--blue); font-size:.76rem; font-weight:750; }
+    h1 { font-size:clamp(2.8rem, 6vw, 5.4rem); line-height:1; margin:16px 0 18px; letter-spacing:-.055em; }
+    h2 { font-size:clamp(1.7rem, 3vw, 2.4rem); line-height:1.15; letter-spacing:-.03em; margin:0 0 18px; }
+    h3 { font-size:1.05rem; margin:0 0 8px; }
+    .lead { font-size:1.22rem; color:#344657; max-width:650px; }
+    .tag { display:inline-flex; border:1px solid #b7d7df; background:#e9f5f7; border-radius:999px; padding:5px 11px; color:#195c72; font-size:.82rem; font-weight:650; }
+    .hero-figure { background:#fff; border:1px solid var(--line); border-radius:22px; padding:16px; box-shadow:0 16px 45px rgba(24,55,74,.08); }
+    .hero-figure img { display:block; width:100%; max-height:440px; object-fit:contain; }
+    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
+    .button { display:inline-block; padding:11px 17px; border-radius:10px; font-weight:700; border:1px solid var(--blue); }
+    .button.primary { color:#fff; background:var(--blue); }
+    .button.secondary { color:var(--blue); background:#fff; }
+    section { padding:58px 0; }
+    .section-intro { max-width:700px; color:var(--muted); margin:0 0 26px; }
+    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .card { background:var(--white); border:1px solid var(--line); border-radius:16px; padding:22px; }
+    .step { color:var(--blue); font-size:.8rem; font-weight:800; letter-spacing:.12em; margin-bottom:12px; }
+    .figure-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    figure { margin:0; background:#fff; border:1px solid var(--line); border-radius:15px; padding:14px; }
+    figure img { display:block; width:100%; height:270px; object-fit:contain; }
+    figcaption { border-top:1px solid var(--line); margin-top:8px; padding-top:8px; color:var(--muted); font-size:.88rem; }
+    .callout { background:var(--mint); border:1px solid #c8e8e1; border-radius:16px; padding:22px; }
+    .codebox { background:#13212d; color:#e7f1f6; border-radius:12px; padding:16px 19px; overflow:auto; }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    footer { border-top:1px solid var(--line); padding:30px 0 44px; color:var(--muted); font-size:.9rem; }
+    @media (max-width:760px) {
+      .hero-grid,.split { grid-template-columns:1fr; }
+      .hero { padding-top:48px; }
+      .cards { grid-template-columns:1fr; }
+      .figure-grid { grid-template-columns:1fr; }
+      figure img { height:auto; max-height:300px; }
+      .nav { align-items:flex-start; flex-direction:column; padding:15px 0; gap:8px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#">PASA-KV</a>
+      <nav aria-label="Main navigation">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#figures">Figures</a>
+        <a href="#code">Code</a>
+        <a href="#paper">Paper</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="tag">Anonymous method reference</span>
+          <p class="eyebrow">World-action model security</p>
+          <h1>Probe the route.<br>Understand the attack.</h1>
+          <p class="lead">PASA-KV studies how visual perturbations travel through action-facing key and value routes in world-action models, and how a small probing budget can identify routes that change downstream actions.</p>
+          <div class="actions">
+            <a class="button primary" href="code/PASAKV/README.md">Read the code</a>
+            <a class="button secondary" href="#figures">Explore the figures</a>
+          </div>
+        </div>
+        <div class="hero-figure">
+          <img src="assets/figures/fig4_pipeline.png" alt="PASA-KV pipeline architecture diagram">
+        </div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <div class="wrap">
+        <p class="eyebrow">The question</p>
+        <h2>Which visual routes matter to action?</h2>
+        <p class="section-intro">World-action models connect visual observations, internal representations, and robot actions through different inference graphs. PASA-KV studies the action-facing K/V interfaces within those graphs, while keeping candidate-layer selection separate from online task success.</p>
+        <div class="cards">
+          <article class="card"><div class="step">01 / PROBE</div><h3>Measure candidate routes</h3><p>Use short, task-balanced K/V probes to characterize candidate layers.</p></article>
+          <article class="card"><div class="step">02 / SELECT</div><h3>Rank by paired action response</h3><p>Score clean and patched outputs with the Tail-AV selector on a disjoint calibration set.</p></article>
+          <article class="card"><div class="step">03 / EVALUATE</div><h3>Train a fresh patch</h3><p>Optimize a new universal RGB patch on selected routes, then evaluate it on a separate policy grid.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="method">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Method</p>
+          <h2>One selection protocol, architecture-specific adapters</h2>
+          <p>The reference code separates K/V displacement, action-response scoring, ranking, patch training, and evaluation-grid integrity. Adapters supply model-specific tensors and visual-token indices while preserving the shared method interface.</p>
+          <p>Rollout outcomes do not enter route selection. Each final top-k patch starts from a fresh initialization rather than reusing the short probe patches.</p>
+        </div>
+        <aside class="callout">
+          <h3>Reproduction boundary</h3>
+          <p>The release is a compact method implementation. Upstream model code, adapters, checkpoints, datasets, and simulator assets are not vendored. The repository does not claim end-to-end reproduction from this package alone.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="figures">
+      <div class="wrap">
+        <p class="eyebrow">Project visuals</p>
+        <h2>Figures and experiment views</h2>
+        <p class="section-intro">These figures were copied from the local figure archive. SVG vectors are included where available; Figure 4 is a PNG rendering of the pipeline diagram. Review captions, result status, and consistency with the latest paper before public release.</p>
+        <div class="figure-grid">
+          <figure><img src="assets/figures/fig1.svg" alt="Figure 1"><figcaption>Figure 1</figcaption></figure>
+          <figure><img src="assets/figures/fig2.svg" alt="Figure 2"><figcaption>Figure 2</figcaption></figure>
+          <figure><img src="assets/figures/fig3.svg" alt="Figure 3"><figcaption>Figure 3</figcaption></figure>
+          <figure><img src="assets/figures/fig4_pipeline.png" alt="PASA-KV pipeline diagram"><figcaption>Figure 4 · PASA-KV pipeline</figcaption></figure>
+          <figure><img src="assets/figures/fig5.svg" alt="Figure 5"><figcaption>Figure 5</figcaption></figure>
+          <figure><img src="assets/figures/fig6.svg" alt="Figure 6"><figcaption>Figure 6</figcaption></figure>
+          <figure><img src="assets/figures/fig7.svg" alt="Figure 7"><figcaption>Figure 7</figcaption></figure>
+          <figure><img src="assets/figures/fig8.svg" alt="Figure 8"><figcaption>Figure 8</figcaption></figure>
+          <figure><img src="assets/figures/fig9.svg" alt="Figure 9"><figcaption>Figure 9</figcaption></figure>
+          <figure><img src="assets/figures/fig10.svg" alt="Figure 10"><figcaption>Figure 10</figcaption></figure>
+          <figure><img src="assets/figures/fig11.svg" alt="Figure 11"><figcaption>Figure 11</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="code">
+      <div class="wrap split">
+        <div>
+          <p class="eyebrow">Code</p>
+          <h2>Anonymous reference implementation</h2>
+          <p>Explore the method core, adapter contract, training pipeline, evaluation helpers, configurations, and CPU method tests in the code directory.</p>
+          <p><a class="button primary" href="code/PASAKV/README.md">Open the repository README</a></p>
+        </div>
+        <div class="codebox"><code>cd code/PASAKV<br>python -m pip install -e ".[test]"</code></div>
+      </div>
+    </section>
+
+    <section id="paper">
+      <div class="wrap">
+        <p class="eyebrow">Paper</p>
+        <h2>Preprint and citation</h2>
+        <p class="section-intro">Add the verified current manuscript, arXiv link, and citation once the latest source package is restored and checked.</p>
+        <div class="callout"><strong>Release note:</strong> the current local LaTeX source is an earlier draft. No arXiv identifier or final-paper PDF is linked here.</div>
+        <p style="margin-top:22px"><strong>License:</strong> not assigned yet. Select a license and review upstream compatibility before publishing.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div class="wrap">PASA-KV · Static project homepage · Review paper status, license, and figure permissions before public release.</div>
+  </footer>
+</body>
+</html>
+
+
