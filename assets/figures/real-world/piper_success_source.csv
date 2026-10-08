@@ -1,0 +1,4 @@
+task,clean_successes,top3_successes,top5_successes,trials
+Stack three bowls,10,0,0,10
+Place carrot in bowl,4,2,0,10
+Place pen in cup,6,4,0,10

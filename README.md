@@ -1,59 +1,57 @@
-# PASA-KV — Project Overview
+# PASA-KV
+
+**PASA-KV** studies how visual perturbations affect the action-facing key and value (K/V) routes used by world-action models. This repository contains an anonymous reference implementation, selected paper figures, and a static project page.
+
+## Method
+
+PASA-KV probes candidate K/V routes, ranks them by paired action response with the Tail-AV selector, then trains a fresh universal patch on selected routes. Online task success is reserved for evaluation and is not used to select routes.
 
 <p align="center">
-  <img src="assets/figures/fig4_pipeline.png" alt="PASA-KV pipeline architecture diagram" width="900">
+  <img src="assets/figures/fig4_pipeline.png" alt="PASA-KV probe, selection, and patch-training pipeline" width="820">
 </p>
+<p align="center"><em>Overview of the PASA-KV pipeline.</em></p>
 
-PASA-KV studies how visual perturbations affect the action-facing key and value (K/V) routes used by world-action models. The project develops a model-agnostic reference implementation for probing candidate routes, ranking them by paired action response, and training a fresh universal patch on selected routes.
+## Main results
 
-## Why this project
+The paper figures below highlight the two findings that motivate the method: target layers differ substantially in policy success under the same attack budget, and action-facing K/V pathways vary by layer and intervention type.
 
-World-action models combine visual processing and robot control through different inference graphs. PASA-KV focuses on the internal K/V routes that carry visual information toward action computation, and asks how a limited probing budget can identify routes that matter to downstream actions.
+<p align="center">
+  <img src="assets/figures/fig1.svg" alt="Target-layer policy success and Tail-AV scores across FastWAM layers" width="820">
+</p>
+<p align="center"><em>Target layers have different policy success rates; Tail-AV scores all 30 layers and identifies candidate targets.</em></p>
 
-## Method at a glance
+<p align="center">
+  <img src="assets/figures/fig3.svg" alt="Distinct key and value pathways and layer-dependent counterfactual results" width="820">
+</p>
+<p align="center"><em>Key and value interventions affect action routing and content differently across layers.</em></p>
 
-1. **Probe candidate routes.** Run short K/V patch probes with a task-balanced schedule.
-2. **Rank by action response.** Score paired clean and patched outputs with the Tail-AV selector; online task success is not used for selection.
-3. **Train and evaluate.** Select the requested top-k routes, initialize a fresh RGB patch, and evaluate policy success on a separate evaluation grid.
+## Real-robot results
 
-The implementation includes the core scoring and training interfaces, configuration examples, and CPU-level method tests. Model adapters, model weights, datasets, and simulator assets remain external dependencies.
+On the AgileX Piper arm, the project evaluated three tabletop tasks with 10 trials per task. The chart shows per-task success for clean observations and patches trained on the selected Top-3 or Top-5 routes. Each trial is shown in the labels; whiskers indicate 95% Wilson intervals.
 
-## Figure archive
+<p align="center">
+  <img src="assets/figures/real-world/piper_success.png" alt="Per-task AgileX Piper success rates for clean observations and PASA-KV Top-3 and Top-5 patches; 10 trials per task" width="820">
+</p>
+<p align="center"><em>Per-task real-robot success rate. These are small-sample results (10 trials per task), not a pooled estimate across tasks.</em></p>
 
-The figure assets below come from the project archive. SVG vectors are included where available; Figure 4 is a PNG rendering of the pipeline diagram. Review captions and alignment with the latest manuscript before treating them as final public paper figures.
-
-<div class="figure-grid">
-  <figure><img src="assets/figures/fig1.svg" alt="Project figure 1"><figcaption>Figure 1</figcaption></figure>
-  <figure><img src="assets/figures/fig2.svg" alt="Project figure 2"><figcaption>Figure 2</figcaption></figure>
-  <figure><img src="assets/figures/fig3.svg" alt="Project figure 3"><figcaption>Figure 3</figcaption></figure>
-  <figure><img src="assets/figures/fig5.svg" alt="Project figure 5"><figcaption>Figure 5</figcaption></figure>
-  <figure><img src="assets/figures/fig6.svg" alt="Project figure 6"><figcaption>Figure 6</figcaption></figure>
-  <figure><img src="assets/figures/fig7.svg" alt="Project figure 7"><figcaption>Figure 7</figcaption></figure>
-  <figure><img src="assets/figures/fig8.svg" alt="Project figure 8"><figcaption>Figure 8</figcaption></figure>
-  <figure><img src="assets/figures/fig9.svg" alt="Project figure 9"><figcaption>Figure 9</figcaption></figure>
-  <figure><img src="assets/figures/fig10.svg" alt="Project figure 10"><figcaption>Figure 10</figcaption></figure>
-  <figure><img src="assets/figures/fig11.svg" alt="Project figure 11"><figcaption>Figure 11</figcaption></figure>
-</div>
+Source data: [`piper_success_source.csv`](assets/figures/real-world/piper_success_source.csv) · [vector chart](assets/figures/real-world/piper_success.svg) · [success rates and Wilson intervals](assets/figures/real-world/piper_success_with_wilson_ci.csv).
 
 ## Code
 
-The anonymous reference implementation is in the code/PASAKV directory. Start with its English README, Chinese README, and NOTICE.md.
+The anonymous reference implementation is in [`code/PASAKV`](code/PASAKV). Start with its [English README](code/PASAKV/README.md), [Chinese README](code/PASAKV/README_zh.md), and [NOTICE](code/PASAKV/NOTICE.md).
 
-<pre><code>cd code/PASAKV
-python -m pip install -e ".[test]"</code></pre>
+```bash
+cd code/PASAKV
+python -m pip install -e ".[test]"
+```
 
-No end-to-end simulator command is supplied: adapters and upstream model/runtime revisions must be installed and audited separately.
+Model adapters, model weights, datasets, and simulator assets are not included. The package provides the core method interfaces and CPU-level tests, but is not an end-to-end reproduction environment.
 
-## Paper and citation
+## Project page and citation
 
-Add the verified current preprint and citation entry here after recovering the latest manuscript source. The local migration package contains an earlier editable draft; it is not the submitted version.
+- Static project page: [`index.html`](index.html)
+- Paper and citation: to be added after the current manuscript and public preprint are verified.
 
 ## Release status
 
-This is an anonymous method snapshot prepared for review. The staged repository has no assigned license yet. Choose a license and review upstream compatibility before making a public release. Recheck anonymization and figure permissions after adding material.
-
----
-
-This page is a static GitHub Pages starting point. It has no external runtime dependencies; publish this directory as the site root after reviewing the release checklist.
-
-
+This is an anonymous method snapshot. No open-source license has been assigned yet. Review the upstream compatibility and figure permissions before making a public release.
