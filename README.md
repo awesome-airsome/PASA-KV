@@ -13,7 +13,7 @@ Internal representation change, action response, and closed-loop task failure ar
 3. **Train fresh:** discard probe patches and initialize a new patch for the selected Top-k routes.
 4. **Evaluate:** overlay the patch on the current camera observation at every replan and measure closed-loop task success.
 
-<p align="center"><img src="assets/figures/paper-2026-09/fig2_pipeline.png" alt="PASA-KV action-facing visual K/V interface and probe-select-train pipeline" width="900"></p>
+<p align="center"><img src="assets/figures/readme/method_pipeline.png" alt="PASA-KV action-facing visual K/V interface and probe-select-train pipeline" width="900"></p>
 
 **What is modified?** The optimized object is an RGB patch. Internal K/V tensors provide the training loss; victim weights remain frozen. At deployment, the patch modifies camera pixels. Keys determine where action queries read, and values determine the content they receive. Large K/V displacement alone need not produce a large behavioral effect.
 
