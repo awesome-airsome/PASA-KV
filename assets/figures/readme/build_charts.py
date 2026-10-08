@@ -34,7 +34,7 @@ for x,model,col in [(25,'FastWAM','fastwam_policy_sr'),(520,'LingBot-VA','lingbo
 s.append(text(36,545,'PASA-KV is highlighted in coral. Cosmos Top-5 ties DRIFT, UPA-RFAS, and UADA at 89.2%; results cover one checkpoint per system.',12,MUTED));save('main_success.svg',s)
 controls=[('Probe-K/V',95,47.5),('Evenly spaced',37,18.5),('Random-1',173,86.5),('Random-2',127,63.5),('Random-3',50,25.0),('Tail-AV',3,1.5)]
 with (out/'table2_selection.csv').open('w',newline='') as f:
- wr=csv.writer(f);wr.writerow(['selection','successes','trials','policy_sr']);wr.writerows((a,b,200,c) for a,b,c in controls)
+ wr=csv.writer(f,lineterminator="\n");wr.writerow(['selection','successes','trials','policy_sr']);wr.writerows((a,b,200,c) for a,b,c in controls)
 s=begin(1050,480,'Why select action-facing routes?','Paper Table 2 · same victim, joint K/V loss, three targets, patch geometry, and 10k exposures')
 panel(s,28,105,994,'Matched FastWAM selection controls',[(a,v,f'{v:.1f}% ({k}/200)',OUR if a=='Tail-AV' else BASE) for a,k,v in controls],labelw=210,gap=34)
 s.append(text(36,456,'Tail-AV: 1.5% SR versus 47.5% for probe K/V displacement. Eval200 is separate from the Table 1 Eval500 comparison.',12,MUTED));save('selection_controls.svg',s)
