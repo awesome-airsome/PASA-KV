@@ -2,6 +2,16 @@
 
 PASA-KV probes action-facing visual key/value (K/V) routes in world action models, selects vulnerable routes with Tail-AV, and trains a fresh task-shared patch on the selected layers. The figures below are taken from the supplied manuscript PDF so the README follows the paper's current figures and color palette.
 
+## Main results
+
+This chart re-renders the paper's primary comparison (Table 1) as bars. The upper row compares policy success across FastWAM, LingBot-VA, and Cosmos Policy; lower success means a stronger attack. The lower row shows recorded construction cost in GPU-hours. Each model panel has its own cost scale. FastWAM Top-k costs include Probe100, as in the paper.
+
+<p align="center">
+  <img src="assets/figures/paper-main-results/table1_results.svg" alt="Paper Table 1 as bar charts: policy success rate and construction GPU-hours for FastWAM, LingBot-VA, and Cosmos Policy" width="100%">
+</p>
+
+Source data: [Table 1 values](assets/figures/paper-main-results/table1_results.csv) · [chart source](assets/figures/paper-main-results/plot_table1.py).
+
 ## Main-paper figures
 
 <p align="center">

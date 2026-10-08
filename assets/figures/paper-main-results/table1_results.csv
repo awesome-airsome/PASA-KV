@@ -1,0 +1,11 @@
+method,fastwam_policy_sr,fastwam_gpu_h,lingbot_policy_sr,lingbot_gpu_h,cosmos_policy_sr,cosmos_gpu_h
+Shared clean reference,92.4,,92.4,,96.8,
+DP-Attacker,81.0,4.23,94.2,1.97,95.2,2.88
+DRIFT,53.0,4.78,92.4,2.46,89.2,3.33
+UPA-RFAS (no PSM),90.8,10.75,91.0,8.94,89.2,23.74
+UPA,77.4,6.45,94.2,8.65,89.6,3.14
+TMA,81.2,6.12,93.0,8.49,90.2,3.13
+UADA,71.4,6.25,95.0,8.64,89.2,3.09
+PASA-KV Top-3,1.2,2.33,88.0,0.96,89.6,2.98
+PASA-KV Top-4,4.4,2.40,90.2,1.10,89.6,3.39
+PASA-KV Top-5,0.0,2.35,87.2,1.55,89.2,3.40
