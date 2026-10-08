@@ -1,0 +1,10 @@
+task,method,successes,trials
+Stack three bowls,Clean FastWAM,10,10
+Stack three bowls,PASA-KV Top-3,0,10
+Stack three bowls,PASA-KV Top-5,0,10
+Place carrot in bowl,Clean FastWAM,4,10
+Place carrot in bowl,PASA-KV Top-3,2,10
+Place carrot in bowl,PASA-KV Top-5,0,10
+Place pen in cup,Clean FastWAM,6,10
+Place pen in cup,PASA-KV Top-3,4,10
+Place pen in cup,PASA-KV Top-5,0,10

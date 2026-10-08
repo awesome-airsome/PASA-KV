@@ -1,40 +1,40 @@
-# PASA-KV
+# PASA-KV: Attacking Action-Facing Visual Routes in World Action Models
 
-**PASA-KV** studies how visual perturbations affect the action-facing key and value (K/V) routes used by world-action models. This repository contains an anonymous reference implementation, selected paper figures, and a static project page.
+PASA-KV probes action-facing visual key/value (K/V) routes in world action models, selects vulnerable routes with Tail-AV, and trains a fresh task-shared patch on the selected layers. The figures below are taken from the supplied manuscript PDF so the README follows the paper's current figures and color palette.
 
-## Method
-
-PASA-KV probes candidate K/V routes, ranks them by paired action response with the Tail-AV selector, then trains a fresh universal patch on selected routes. Online task success is reserved for evaluation and is not used to select routes.
+## Main-paper figures
 
 <p align="center">
-  <img src="assets/figures/fig4_pipeline.png" alt="PASA-KV probe, selection, and patch-training pipeline" width="820">
+  <img src="assets/figures/paper-2026-09/fig1_layerwise.png" alt="Paper Figure 1: layerwise evidence for action-facing vulnerability, including policy success rates, Tail-AV scores, and attack-budget trajectories" width="900">
 </p>
-<p align="center"><em>Overview of the PASA-KV pipeline.</em></p>
-
-## Main results
-
-The paper figures below highlight the two findings that motivate the method: target layers differ substantially in policy success under the same attack budget, and action-facing K/V pathways vary by layer and intervention type.
+<p align="center"><em>Figure 1 · Layerwise evidence for action-facing vulnerability.</em></p>
 
 <p align="center">
-  <img src="assets/figures/fig1.svg" alt="Target-layer policy success and Tail-AV scores across FastWAM layers" width="820">
+  <img src="assets/figures/paper-2026-09/fig2_pipeline.png" alt="Paper Figure 2: PASA-KV action-facing K/V attack surface and probe-select-train pipeline" width="900">
 </p>
-<p align="center"><em>Target layers have different policy success rates; Tail-AV scores all 30 layers and identifies candidate targets.</em></p>
+<p align="center"><em>Figure 2 · PASA-KV construction pipeline.</em></p>
 
 <p align="center">
-  <img src="assets/figures/fig3.svg" alt="Distinct key and value pathways and layer-dependent counterfactual results" width="820">
+  <img src="assets/figures/paper-2026-09/fig3_diagnostics.png" alt="Paper Figure 3: action-response diagnostics across FastWAM, LingBot-VA, and Cosmos Policy" width="900">
 </p>
-<p align="center"><em>Key and value interventions affect action routing and content differently across layers.</em></p>
+<p align="center"><em>Figure 3 · Action-response diagnostics across models and intervention settings.</em></p>
 
-## Real-robot results
+## Real-robot evaluation
 
-On the AgileX Piper arm, the project evaluated three tabletop tasks with 10 trials per task. The chart shows per-task success for clean observations and patches trained on the selected Top-3 or Top-5 routes. Each trial is shown in the labels; whiskers indicate 95% Wilson intervals.
+Experiments use an AgileX Piper arm with head and wrist RGB cameras. The scene figure pairs each initial scene with a representative annotated reference-rollout frame; it illustrates task setup and approximate progress, not complete trajectories.
 
 <p align="center">
-  <img src="assets/figures/real-world/piper_success.png" alt="Per-task AgileX Piper success rates for clean observations and PASA-KV Top-3 and Top-5 patches; 10 trials per task" width="820">
+  <img src="assets/figures/piper-real-robot/piper_task_scenes.png" alt="Piper real-robot tasks: place a pen in a cup, put blocks in a second drawer, place a carrot in a bowl, and stack three bowls" width="900">
 </p>
-<p align="center"><em>Per-task real-robot success rate. These are small-sample results (10 trials per task), not a pooled estimate across tasks.</em></p>
+<p align="center"><em>Real-robot task scenes and representative reference-rollout frames (paper Figure 13).</em></p>
 
-Source data: [`piper_success_source.csv`](assets/figures/real-world/piper_success_source.csv) · [vector chart](assets/figures/real-world/piper_success.svg) · [success rates and Wilson intervals](assets/figures/real-world/piper_success_with_wilson_ci.csv).
+The chart below turns the paper's real-robot result tables into bars. Table 3 shows clean, Top-3, and Top-5 success over three tasks; Table 36 compares methods on bowl stacking. Each condition has 10 trials, and whiskers show 95% Wilson intervals. Table 36 uses method-specific patch geometries, so it is a shared-task comparison rather than a matched-geometry ranking.
+
+<p align="center">
+  <img src="assets/figures/piper-real-robot/piper_results.svg" alt="Real-robot success rates from paper Tables 3 and 36, including per-task PASA-KV Top-3 and Top-5 effects and bowl-stacking baseline comparison" width="100%">
+</p>
+
+Source tables: [Table 3 data](assets/figures/piper-real-robot/table3_task_results.csv) · [Table 36 data](assets/figures/piper-real-robot/table36_bowl_baselines.csv) · [chart source](assets/figures/piper-real-robot/plot_piper_results.py).
 
 ## Code
 
@@ -45,13 +45,8 @@ cd code/PASAKV
 python -m pip install -e ".[test]"
 ```
 
-Model adapters, model weights, datasets, and simulator assets are not included. The package provides the core method interfaces and CPU-level tests, but is not an end-to-end reproduction environment.
+Model adapters, model weights, datasets, and simulator assets are not included. This repository provides the core method interfaces and CPU-level tests, but is not an end-to-end reproduction environment.
 
-## Project page and citation
+## Paper and release status
 
-- Static project page: [`index.html`](index.html)
-- Paper and citation: to be added after the current manuscript and public preprint are verified.
-
-## Release status
-
-This is an anonymous method snapshot. No open-source license has been assigned yet. Review the upstream compatibility and figure permissions before making a public release.
+The manuscript is under review; a public preprint and citation entry will be added when available. This anonymous method snapshot has no assigned open-source license yet. Review upstream compatibility and figure permissions before a public release.

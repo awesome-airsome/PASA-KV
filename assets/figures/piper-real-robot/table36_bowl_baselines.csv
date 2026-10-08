@@ -1,0 +1,10 @@
+method,successes,trials
+Clean FastWAM,10,10
+DP-Attacker,0,10
+DRIFT,2,10
+UPA-RFAS (no PSM),7,10
+UPA,3,10
+TMA,1,10
+UADA,0,10
+PASA-KV Top-3,0,10
+PASA-KV Top-5,0,10
