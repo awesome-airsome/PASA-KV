@@ -32,3 +32,9 @@ The example probes every candidate layer with 100 exposures, ranks task-averaged
 ## Available and external components
 
 Core scoring, overlay utilities, sampling, generic training, orchestration, configs, and evaluation-grid checks are included. Upstream model implementations, adapters, weights, observations, simulator assets, and rollout launchers are external. Reference layer sets in configs are validation values; new runs should derive selections from their own frozen probe ranking.
+
+## Evaluation protocol represented in the paper
+
+The FastWAM training record uses 40 tasks drawn from LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10. This 40-task training mixture is distinct from the paper's closed-loop evaluation suite, LIBERO-10. The primary model comparisons use Eval500: 10 LIBERO-10 tasks with 50 trials per task. Matched layer-selection controls and some diagnostics use Eval200: the same 10 tasks with 20 trials per task. Keep these endpoints separate when comparing success rates. The checked-in FastWAM configuration records the primary Eval500 setting; it is not a complete simulator launcher or a claim that all paper results use 50 trials per task.
+
+The LIBERO benchmark and demonstrations are publicly available from the [official LIBERO repository](https://github.com/Lifelong-Robot-Learning/LIBERO). This method package does not vendor them or the victim models. The real-robot observations, data, and rollout configuration are private and are not release artifacts for this repository.

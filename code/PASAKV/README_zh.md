@@ -19,6 +19,8 @@ pytest
 
 参考 Top-k 层集仅供对应 checkpoint 的复核，正式运行须从 frozen Probe100 ranking 选择。论文承诺的 FastWAM checkpoint 将另行发布到 Hugging Face，本仓库不含 .pt。当前未设置许可证；公开前须选定并检查上游许可兼容性。
 
+FastWAM 的训练记录使用 LIBERO-Spatial、LIBERO-Object、LIBERO-Goal 和 LIBERO-10 共 40 个任务；主实验闭环评估使用 LIBERO-10 Eval500（10 个任务，每任务 50 次），匹配选层对照及部分诊断使用 Eval200（同 10 个任务，每任务 20 次）。真机观测数据和 rollout 配置不计划公开。本仓库定位为方法参考代码，不提供开箱即用的模型集成或完整闭环实验启动器。
+
 ## 接入示例与扩展说明
 
 [examples/run_pipeline.py](examples/run_pipeline.py) 提供可调用的两阶段训练示例，保存排名、选中层、样本标识和最终 RGB patch。在本目录安装方法包后，由调用方提供上游模型适配器及数据。详细输入、随机性配对与输出说明见[接入文档](../../docs/integration.md)；完整结果和诊断见[结果文档](../../docs/results.md)。

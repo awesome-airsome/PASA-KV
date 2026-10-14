@@ -77,7 +77,7 @@ selected, result = run_pipeline(
 
 The example saves the ranking, selected layers, sample identifiers, and RGB patch tensor. [Integration guide](docs/integration.md) explains the inputs, pairing requirements, and outputs.
 
-**Reproduction scope:** The included code supports method-level CPU tests and generic Probe100 → Tail-AV → fresh Top-k patch training once a victim-model adapter and sample providers are supplied. The plotted result tables can be regenerated from the included CSV files and scripts. Reproducing the paper’s model and robot experiments also requires the evaluated model implementations/checkpoints, observations, simulator or robot setup, and model-specific adapters and rollout launchers; these are not included here.
+**Release scope — method reference code:** The included code supports method-level CPU tests and generic Probe100 → Tail-AV → fresh Top-k patch training once a victim-model adapter and sample providers are supplied. The plotted result tables can be regenerated from the included CSV files and scripts. Upstream LingBot-VA and Cosmos Policy releases and the public LIBERO benchmark are obtained separately; the promised FastWAM checkpoint release is planned after the final manuscript. Model-specific adapters and rollout launchers are not included, so this repository is not a turnkey reproduction of the paper's closed-loop experiments. The real-robot data and rollout setup are private and are not planned for release.
 
 ## Paper and release status
 
