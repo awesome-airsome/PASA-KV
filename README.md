@@ -79,6 +79,6 @@ The example saves the ranking, selected layers, sample identifiers, and RGB patc
 
 **Release scope — method reference code:** The included code supports method-level CPU tests and generic Probe100 → Tail-AV → fresh Top-k patch training once a victim-model adapter and sample providers are supplied. The plotted result tables can be regenerated from the included CSV files and scripts. Upstream LingBot-VA and Cosmos Policy releases and the public LIBERO benchmark are obtained separately; the promised FastWAM checkpoint release is planned after the final manuscript. Model-specific adapters and rollout launchers are not included, so this repository is not a turnkey reproduction of the paper's closed-loop experiments.
 
-## Paper and release status
+## Release status
 
-The manuscript is under review. A public preprint and citation will be added when available. This repository has no assigned open-source license yet.
+This repository has no assigned open-source license yet.
