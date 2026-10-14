@@ -62,7 +62,7 @@ pytest
 
 No end-to-end simulator command is supplied until upstream adapters and revisions are audited. FastWAM checkpoint release is planned separately through Hugging Face; this repository contains no .pt files.
 
-The evaluated FastWAM training record combines 40 tasks from LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10. Closed-loop main comparisons use LIBERO-10 Eval500 (10 tasks × 50 trials); matched selection controls and some diagnostics use Eval200 (10 tasks × 20 trials). The `fastwam_direct.yaml` evaluation block records Eval500 only. The real-robot observations and rollout configuration are private and are not planned for release.
+The evaluated FastWAM training record combines 40 tasks from LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10. Closed-loop main comparisons use LIBERO-10 Eval500 (10 tasks × 50 trials); matched selection controls and some diagnostics use Eval200 (10 tasks × 20 trials). The `fastwam_direct.yaml` evaluation block records Eval500 only.
 
 ## Release scope
 
