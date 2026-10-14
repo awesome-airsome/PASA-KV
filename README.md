@@ -27,6 +27,8 @@ Under matched FastWAM conditions, Tail-AV obtains **1.5% policy success**, versu
 
 ## Main results
 
+FastWAM's training record covers 40 tasks across LIBERO-Spatial, LIBERO-Object, LIBERO-Goal, and LIBERO-10. The primary closed-loop evaluation uses only LIBERO-10: 10 tasks with 50 trials each. Matched selection controls and some diagnostics use 20 trials per task.
+
 Policy success rate (SR) is the robot's task success rate: **lower SR means a stronger attack**. PASA-KV Top-5 reaches 0.0% on FastWAM, 87.2% on LingBot-VA, and 89.2% on Cosmos Policy. The smaller changes on the latter two systems are part of the finding; Cosmos Top-5 ties several baselines.
 
 <p align="center"><img src="assets/figures/readme/main_success.svg" alt="Table 1 policy success across FastWAM, LingBot-VA, and Cosmos Policy; PASA-KV rows highlighted in coral" width="100%"></p>
