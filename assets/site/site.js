@@ -1,18 +1,4 @@
 (() => {
-  // Set this once the public arXiv/paper URL is available.
-  const paperUrl = '';
-  if (paperUrl) {
-    document.querySelectorAll('[data-paper-link]').forEach(placeholder => {
-      const link = document.createElement('a');
-      link.className = placeholder.className;
-      link.classList.remove('paper-pending');
-      link.href = paperUrl;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.textContent = placeholder.dataset.paperLabel || 'Paper ↗';
-      placeholder.replaceWith(link);
-    });
-  }
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealItems = document.querySelectorAll('.reveal');
   if (reducedMotion || !('IntersectionObserver' in window)) {
