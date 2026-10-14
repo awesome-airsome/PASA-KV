@@ -3,165 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="PASA-KV studies action-facing K/V routes in world-action models.">
-  <title>PASA-KV | Action-facing K/V routes in world-action models</title>
-  <style>
-    :root { color-scheme: light; --ink:#17222e; --muted:#586879; --blue:#136b8a; --line:#d8e2e9; --paper:#f4f8fa; --white:#fff; --mint:#dff3ef; }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif; color:var(--ink); background:var(--paper); line-height:1.65; }
-    a { color:var(--blue); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .wrap { width:min(1120px, calc(100% - 40px)); margin:0 auto; }
-    header { border-bottom:1px solid var(--line); background:rgba(255,255,255,.9); }
-    .nav { min-height:68px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
-    .brand { font-weight:800; letter-spacing:.03em; font-size:1.15rem; }
-    nav { display:flex; flex-wrap:wrap; gap:20px; font-size:.93rem; }
-    .hero { padding:72px 0 54px; }
-    .hero-grid { display:grid; grid-template-columns:1fr 1.05fr; align-items:center; gap:48px; }
-    .eyebrow { text-transform:uppercase; letter-spacing:.14em; color:var(--blue); font-size:.76rem; font-weight:750; }
-    h1 { font-size:clamp(2.8rem, 6vw, 5.4rem); line-height:1; margin:16px 0 18px; letter-spacing:-.055em; }
-    h2 { font-size:clamp(1.7rem, 3vw, 2.4rem); line-height:1.15; letter-spacing:-.03em; margin:0 0 18px; }
-    h3 { font-size:1.05rem; margin:0 0 8px; }
-    .lead { font-size:1.22rem; color:#344657; max-width:650px; }
-    .tag { display:inline-flex; border:1px solid #b7d7df; background:#e9f5f7; border-radius:999px; padding:5px 11px; color:#195c72; font-size:.82rem; font-weight:650; }
-    .hero-figure { background:#fff; border:1px solid var(--line); border-radius:22px; padding:16px; box-shadow:0 16px 45px rgba(24,55,74,.08); }
-    .hero-figure img { display:block; width:100%; max-height:440px; object-fit:contain; }
-    .actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:24px; }
-    .button { display:inline-block; padding:11px 17px; border-radius:10px; font-weight:700; border:1px solid var(--blue); }
-    .button.primary { color:#fff; background:var(--blue); }
-    .button.secondary { color:var(--blue); background:#fff; }
-    section { padding:58px 0; }
-    .section-intro { max-width:700px; color:var(--muted); margin:0 0 26px; }
-    .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
-    .card { background:var(--white); border:1px solid var(--line); border-radius:16px; padding:22px; }
-    .step { color:var(--blue); font-size:.8rem; font-weight:800; letter-spacing:.12em; margin-bottom:12px; }
-    .figure-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
-    figure { margin:0; background:#fff; border:1px solid var(--line); border-radius:15px; padding:14px; }
-    figure img { display:block; width:100%; height:270px; object-fit:contain; }
-    figcaption { border-top:1px solid var(--line); margin-top:8px; padding-top:8px; color:var(--muted); font-size:.88rem; }
-    .callout { background:var(--mint); border:1px solid #c8e8e1; border-radius:16px; padding:22px; }
-    .codebox { background:#13212d; color:#e7f1f6; border-radius:12px; padding:16px 19px; overflow:auto; }
-    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
-    .split { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
-    footer { border-top:1px solid var(--line); padding:30px 0 44px; color:var(--muted); font-size:.9rem; }
-    @media (max-width:760px) {
-      .hero-grid,.split { grid-template-columns:1fr; }
-      .hero { padding-top:48px; }
-      .cards { grid-template-columns:1fr; }
-      .figure-grid { grid-template-columns:1fr; }
-      figure img { height:auto; max-height:300px; }
-      .nav { align-items:flex-start; flex-direction:column; padding:15px 0; gap:8px; }
-    }
-  </style>
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="PASA-KV probes action-facing visual key/value routes in world-action models and studies their effect on robot control.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PASA-KV | Attacking Action-Facing Visual Routes">
+  <meta property="og:description" content="A visual guide to the method, results, and real-robot demonstrations.">
+  <meta property="og:image" content="assets/video/clean-fastwam-poster.jpg">
+  <title>PASA-KV | Attacking Action-Facing Visual Routes</title>
+  <link rel="stylesheet" href="assets/site/site.css">
+  <script defer src="assets/site/site.js"></script>
 </head>
 <body>
-  <header>
-    <div class="wrap nav">
-      <a class="brand" href="#">PASA-KV</a>
-      <nav aria-label="Main navigation">
-        <a href="#overview">Overview</a>
-        <a href="#method">Method</a>
-        <a href="#figures">Figures</a>
-        <a href="#code">Code</a>
-        <a href="#paper">Paper</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div>
-          <span class="tag">Anonymous method reference</span>
-          <p class="eyebrow">World-action model security</p>
-          <h1>Probe the route.<br>Understand the attack.</h1>
-          <p class="lead">PASA-KV studies how visual perturbations travel through action-facing key and value routes in world-action models, and how a small probing budget can identify routes that change downstream actions.</p>
-          <div class="actions">
-            <a class="button primary" href="code/PASAKV/README.md">Read the code</a>
-            <a class="button secondary" href="#figures">Explore the figures</a>
-          </div>
-        </div>
-        <div class="hero-figure">
-          <img src="assets/figures/fig4_pipeline.png" alt="PASA-KV pipeline architecture diagram">
-        </div>
-      </div>
-    </section>
-
-    <section id="overview">
-      <div class="wrap">
-        <p class="eyebrow">The question</p>
-        <h2>Which visual routes matter to action?</h2>
-        <p class="section-intro">World-action models connect visual observations, internal representations, and robot actions through different inference graphs. PASA-KV studies the action-facing K/V interfaces within those graphs, while keeping candidate-layer selection separate from online task success.</p>
-        <div class="cards">
-          <article class="card"><div class="step">01 / PROBE</div><h3>Measure candidate routes</h3><p>Use short, task-balanced K/V probes to characterize candidate layers.</p></article>
-          <article class="card"><div class="step">02 / SELECT</div><h3>Rank by paired action response</h3><p>Score clean and patched outputs with the Tail-AV selector on a disjoint calibration set.</p></article>
-          <article class="card"><div class="step">03 / EVALUATE</div><h3>Train a fresh patch</h3><p>Optimize a new universal RGB patch on selected routes, then evaluate it on a separate policy grid.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <section id="method">
-      <div class="wrap split">
-        <div>
-          <p class="eyebrow">Method</p>
-          <h2>One selection protocol, architecture-specific adapters</h2>
-          <p>The reference code separates K/V displacement, action-response scoring, ranking, patch training, and evaluation-grid integrity. Adapters supply model-specific tensors and visual-token indices while preserving the shared method interface.</p>
-          <p>Rollout outcomes do not enter route selection. Each final top-k patch starts from a fresh initialization rather than reusing the short probe patches.</p>
-        </div>
-        <aside class="callout">
-          <h3>Reproduction boundary</h3>
-          <p>The release is a compact method implementation. Upstream model code, adapters, checkpoints, datasets, and simulator assets are not vendored. The repository does not claim end-to-end reproduction from this package alone.</p>
-        </aside>
-      </div>
-    </section>
-
-    <section id="figures">
-      <div class="wrap">
-        <p class="eyebrow">Project visuals</p>
-        <h2>Figures and experiment views</h2>
-        <p class="section-intro">These figures were copied from the local figure archive. SVG vectors are included where available; Figure 4 is a PNG rendering of the pipeline diagram. Review captions, result status, and consistency with the latest paper before public release.</p>
-        <div class="figure-grid">
-          <figure><img src="assets/figures/fig1.svg" alt="Figure 1"><figcaption>Figure 1</figcaption></figure>
-          <figure><img src="assets/figures/fig2.svg" alt="Figure 2"><figcaption>Figure 2</figcaption></figure>
-          <figure><img src="assets/figures/fig3.svg" alt="Figure 3"><figcaption>Figure 3</figcaption></figure>
-          <figure><img src="assets/figures/fig4_pipeline.png" alt="PASA-KV pipeline diagram"><figcaption>Figure 4 · PASA-KV pipeline</figcaption></figure>
-          <figure><img src="assets/figures/fig5.svg" alt="Figure 5"><figcaption>Figure 5</figcaption></figure>
-          <figure><img src="assets/figures/fig6.svg" alt="Figure 6"><figcaption>Figure 6</figcaption></figure>
-          <figure><img src="assets/figures/fig7.svg" alt="Figure 7"><figcaption>Figure 7</figcaption></figure>
-          <figure><img src="assets/figures/fig8.svg" alt="Figure 8"><figcaption>Figure 8</figcaption></figure>
-          <figure><img src="assets/figures/fig9.svg" alt="Figure 9"><figcaption>Figure 9</figcaption></figure>
-          <figure><img src="assets/figures/fig10.svg" alt="Figure 10"><figcaption>Figure 10</figcaption></figure>
-          <figure><img src="assets/figures/fig11.svg" alt="Figure 11"><figcaption>Figure 11</figcaption></figure>
-        </div>
-      </div>
-    </section>
-
-    <section id="code">
-      <div class="wrap split">
-        <div>
-          <p class="eyebrow">Code</p>
-          <h2>Anonymous reference implementation</h2>
-          <p>Explore the method core, adapter contract, training pipeline, evaluation helpers, configurations, and CPU method tests in the code directory.</p>
-          <p><a class="button primary" href="code/PASAKV/README.md">Open the repository README</a></p>
-        </div>
-        <div class="codebox"><code>cd code/PASAKV<br>python -m pip install -e ".[test]"</code></div>
-      </div>
-    </section>
-
-    <section id="paper">
-      <div class="wrap">
-        <p class="eyebrow">Paper</p>
-        <h2>Preprint and citation</h2>
-        <p class="section-intro">Add the verified current manuscript, arXiv link, and citation once the latest source package is restored and checked.</p>
-        <div class="callout"><strong>Release note:</strong> the current local LaTeX source is an earlier draft. No arXiv identifier or final-paper PDF is linked here.</div>
-        <p style="margin-top:22px"><strong>License:</strong> not assigned yet. Select a license and review upstream compatibility before publishing.</p>
-      </div>
-    </section>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="container header-inner">
+    <a class="wordmark" href="#top" aria-label="PASA-KV home"><span class="wordmark-mark">P<span>·</span>K</span> PASA-KV</a>
+    <nav class="nav" aria-label="Main navigation"><a href="#idea">Idea</a><a href="#method">Method</a><a href="#results">Results</a><a href="#robot">Robot</a></nav>
+    <a class="header-code" href="https://github.com/awesome-airsome/PASA-KV" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>
+  </div></header>
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title"><div class="container hero-grid">
+      <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-line"></span> WORLD ACTION MODEL SECURITY</div><h1 id="hero-title">Attacking <em>action-facing</em> visual routes.</h1><p class="hero-subtitle">PASA-KV locates the visual key/value routes that robot actions actually read, then trains a small RGB patch against the selected routes.</p><div class="hero-actions"><a class="button button-dark" href="#robot">Watch robot demos <span aria-hidden="true">↘</span></a><a class="button button-light" href="https://github.com/awesome-airsome/PASA-KV" target="_blank" rel="noopener noreferrer">Explore code <span aria-hidden="true">↗</span></a></div><p class="hero-note">Research manuscript under review <span aria-hidden="true">·</span> Method and reference code available</p></div>
+      <div class="hero-visual"><img src="assets/video/clean-fastwam-poster.jpg" alt="Piper robot beside a tabletop pen and cup task" fetchpriority="high"><div class="hero-visual-top"><span class="live-dot"></span> REAL-ROBOT EVALUATION</div><div class="hero-visual-bottom"><span class="visual-index">01 / 03</span><span>See what happens when visual routes are redirected.</span></div><div class="orb orb-one" aria-hidden="true"></div><div class="orb orb-two" aria-hidden="true"></div></div>
+    </div><div class="container hero-bottom"><span>A visual route can look disrupted without changing behavior.</span><a href="#idea">Scroll to the idea <span aria-hidden="true">↓</span></a></div></section>
+    <section class="section idea-section" id="idea" aria-labelledby="idea-title"><div class="container"><div class="section-head reveal"><div class="section-kicker">01 <span></span> THE IDEA</div><h2 id="idea-title">The important question is <em>where actions read.</em></h2><p>A patch can alter visual features without changing a robot's decision. PASA-KV focuses on the interface between visual tokens and action queries.</p></div><div class="idea-grid"><article class="idea-card reveal"><div class="idea-icon icon-route" aria-hidden="true"><span></span><span></span><span></span></div><span class="idea-number">01 / ROUTING</span><h3>Keys determine where to look.</h3><p>Visual keys influence how action queries route attention over image tokens.</p></article><article class="idea-card reveal"><div class="idea-icon icon-content" aria-hidden="true"><span></span><span></span><span></span></div><span class="idea-number">02 / CONTENT</span><h3>Values determine what arrives.</h3><p>Visual values carry the content passed to the action-facing readout.</p></article><article class="idea-card idea-card-accent reveal"><div class="idea-icon icon-action" aria-hidden="true"><span></span><span></span><span></span></div><span class="idea-number">03 / BEHAVIOR</span><h3>Closed-loop success is the test.</h3><p>Internal displacement and action response are diagnostics; task success measures the final effect.</p></article></div></div></section>
+    <section class="section method-section" id="method" aria-labelledby="method-title"><div class="container"><div class="section-head section-head-inline reveal"><div><div class="section-kicker">02 <span></span> METHOD</div><h2 id="method-title">Probe. Select. <em>Train fresh.</em></h2></div><p>A short, readout-aware search chooses target layers before a new task-shared patch is trained.</p></div><figure class="figure-panel method-figure reveal"><div class="figure-scroll"><img src="assets/figures/readme/method_pipeline.png" alt="PASA-KV diagram showing an RGB patch entering visual K/V routes, the action readout, and the probe-select-train-evaluate pipeline" loading="lazy"></div><figcaption>Visual K/V are training targets. The deployed attack is an RGB patch on camera pixels; model weights remain frozen.</figcaption></figure><div class="method-steps reveal" aria-label="PASA-KV procedure"><div><span>01</span><strong>Probe</strong><small>Per-layer patches</small></div><div><span>02</span><strong>Score</strong><small>Tail-AV on held-out pairs</small></div><div><span>03</span><strong>Select</strong><small>Top-k action-facing routes</small></div><div><span>04</span><strong>Train</strong><small>Fresh shared patch</small></div><div><span>05</span><strong>Evaluate</strong><small>Closed-loop policy success</small></div></div><p class="method-note reveal">Layer selection uses no rollout success labels. The probe patches are discarded before final training.</p></div></section>
+    <section class="section results-section" id="results" aria-labelledby="results-title"><div class="container"><div class="section-head reveal"><div class="section-kicker">03 <span></span> RESULTS</div><h2 id="results-title">A strong effect on FastWAM.<br><em>A more limited effect elsewhere.</em></h2><p>Policy success rate is the robot's task success rate. Lower success under attack means a stronger attack.</p></div><div class="metric-row reveal"><div class="metric-feature"><span class="metric-eyebrow">FASTWAM · EVAL500</span><div class="metric-comparison"><div><strong>92.4<span>%</span></strong><small>Clean</small></div><span class="metric-arrow" aria-hidden="true">→</span><div><strong>0.0<span>%</span></strong><small>PASA-KV Top-5</small></div></div><p>On the evaluated FastWAM checkpoint, Top-5 reduces policy success to zero across 500 episodes.</p></div><div class="metric-side"><span class="metric-eyebrow">WHY SELECTION MATTERS · EVAL200</span><div class="side-stat"><strong>1.5%</strong><span>Tail-AV selected layers</span></div><div class="side-rule"></div><div class="side-stat muted"><strong>47.5%</strong><span>Probe K/V displacement selection</span></div><p>Matched conditions; same loss, target count, patch geometry, and training budget.</p></div></div><figure class="figure-panel chart-panel reveal"><img src="assets/figures/readme/main_success.svg" alt="Main results across FastWAM, LingBot-VA, and Cosmos Policy, with PASA-KV rows highlighted" loading="lazy"><figcaption>Paper Table 1 · LIBERO-10 Eval500. LingBot-VA Top-5 reaches 87.2% policy success and Cosmos Policy Top-5 reaches 89.2%; the evaluated systems differ in interface and protocol. <a href="https://github.com/awesome-airsome/PASA-KV/blob/main/docs/results.md" target="_blank" rel="noopener noreferrer">Full results and scope ↗</a></figcaption></figure></div></section>
+    <section class="section robot-section" id="robot" aria-labelledby="robot-title"><div class="container"><div class="section-head section-head-inline reveal"><div><div class="section-kicker">04 <span></span> REAL ROBOT</div><h2 id="robot-title">From pixels to <em>physical motion.</em></h2></div><p>Piper demonstrations from the supplied clean and Top-5 attack recordings. Each clip is pre-rendered at 5× speed.</p></div><div class="video-grid"><figure class="video-card reveal"><div class="video-topline"><span class="video-status clean-status"></span><strong>Clean FastWAM</strong><span>5× SPEED</span></div><video controls muted loop playsinline autoplay preload="metadata" poster="assets/video/clean-fastwam-poster.jpg" aria-label="Clean FastWAM Piper pen and cup demonstration"><source src="assets/video/clean-fastwam-5x.mp4" type="video/mp4">Your browser does not support HTML5 video.</video><figcaption>Clean run · Piper pen and cup task</figcaption></figure><figure class="video-card reveal"><div class="video-topline"><span class="video-status attack-status"></span><strong>PASA-KV Top-5</strong><span>5× SPEED</span></div><video controls muted loop playsinline autoplay preload="metadata" poster="assets/video/pasa-kv-top5-fastwam-poster.jpg" aria-label="PASA-KV Top-5 attack Piper pen and cup demonstration"><source src="assets/video/pasa-kv-top5-fastwam-5x.mp4" type="video/mp4">Your browser does not support HTML5 video.</video><figcaption>Attack run · Piper pen and cup task</figcaption></figure></div><p class="video-footnote reveal">These are qualitative recordings supplied for this page. Their pairing and trial metadata are not documented here; use the reported trial counts below for quantitative claims.</p><div class="robot-evidence reveal"><div><span class="small-label">PAPER TABLE 3 · PIPER</span><h3>One Top-5 patch.<br>Three reported tasks.</h3><p>A separately trained Piper FastWAM checkpoint uses one task-shared patch per Top-k condition, overlaid on the head-camera image at each replan.</p></div><figure><img src="assets/figures/readme/robot_success.svg" alt="Piper real-robot success counts for three clean-capable tasks: clean 10, 4, and 6 of 10; Top-5 zero of 10 for each" loading="lazy"><figcaption>Three clean-capable tasks, 10 trials per condition. The fourth training task had 0/10 clean success and is excluded from the attack comparison.</figcaption></figure></div></div></section>
+    <section class="section closing-section" aria-labelledby="closing-title"><div class="container closing-grid"><div><div class="section-kicker">EXPLORE FURTHER</div><h2 id="closing-title">See the method.<br><em>Work with the code.</em></h2><p>The repository contains the reference implementation, integration guide, result tables, and diagnostic figures. The manuscript is under review; a public paper link will be added when available.</p><div class="closing-actions"><a class="button button-coral" href="https://github.com/awesome-airsome/PASA-KV" target="_blank" rel="noopener noreferrer">Open code repository ↗</a><a class="text-link" href="https://github.com/awesome-airsome/PASA-KV/blob/main/docs/integration.md" target="_blank" rel="noopener noreferrer">Integration guide ↗</a><a class="text-link" href="https://github.com/awesome-airsome/PASA-KV/blob/main/docs/results.md" target="_blank" rel="noopener noreferrer">Detailed results ↗</a></div></div><div class="closing-art" aria-hidden="true"><span class="art-route art-one"></span><span class="art-route art-two"></span><span class="art-route art-three"></span><span class="art-core">K / V</span></div></div></section>
   </main>
-  <footer>
-    <div class="wrap">PASA-KV · Static project homepage · Review paper status, license, and figure permissions before public release.</div>
-  </footer>
+  <footer class="footer"><div class="container footer-inner"><strong>PASA-KV</strong><span>Attacking Action-Facing Visual Routes in World Action Models</span><a href="#top">Back to top ↑</a></div></footer>
 </body>
 </html>
-
-
