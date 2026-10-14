@@ -75,8 +75,10 @@ selected, result = run_pipeline(
 )
 ```
 
-The example saves the ranking, selected layers, sample identifiers, and RGB patch tensor. [Integration guide](docs/integration.md) explains the inputs, pairing requirements, and outputs. Model adapters, model weights, datasets, and simulator assets are external; installing this package alone does not reproduce the full paper experiments.
+The example saves the ranking, selected layers, sample identifiers, and RGB patch tensor. [Integration guide](docs/integration.md) explains the inputs, pairing requirements, and outputs.
+
+**Reproduction scope:** The included code supports method-level CPU tests and generic Probe100 → Tail-AV → fresh Top-k patch training once a victim-model adapter and sample providers are supplied. The plotted result tables can be regenerated from the included CSV files and scripts. Reproducing the paper’s model and robot experiments also requires the evaluated model implementations/checkpoints, observations, simulator or robot setup, and model-specific adapters and rollout launchers; these are not included here.
 
 ## Paper and release status
 
-The manuscript is under review. A public preprint and citation will be added when available. This anonymous method reference snapshot has no assigned open-source license yet.
+The manuscript is under review. A public preprint and citation will be added when available. This repository has no assigned open-source license yet.

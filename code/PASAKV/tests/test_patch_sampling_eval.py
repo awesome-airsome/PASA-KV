@@ -12,7 +12,7 @@ def test_patch_initialization_is_reproducible_and_bounded():
     a = initialize_patch(4, 5, seed=42)
     b = initialize_patch(4, 5, seed=42)
     assert torch.equal(a, b)
-    assert float(a.min()) >= 0.0 and float(a.max()) <= 1.0
+    assert float(a.detach().min()) >= 0.0 and float(a.detach().max()) <= 1.0
 
 
 def test_overlay_video_changes_only_selected_frame_and_rectangle():

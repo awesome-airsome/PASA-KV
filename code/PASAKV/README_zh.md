@@ -1,6 +1,6 @@
-# PASA-KV 匿名代码快照
+# PASA-KV 参考实现
 
-这是论文 *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models* 的精简、模型无关参考实现。它包含 singleton K/V probe、task-balanced sampler、action-facing Tail-AV 评分、确定性 Top-k 选择、fresh joint K/V patch training、patch 投影和评估 trial-grid 检查；不包含作者/机构信息、模型权重、数据集、模拟器资产、实验结果或上游模型代码。
+这是论文 *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models* 的精简、模型无关参考实现。它包含 singleton K/V probe、task-balanced sampler、action-facing Tail-AV 评分、确定性 Top-k 选择、fresh joint K/V patch training、patch 投影和评估 trial-grid 检查；不包含模型权重、数据集、模拟器资产或上游模型代码。
 
 对候选层 l，probe 目标为 J_KV(l)=0.5*(D_K+D_V)，其中 D_Z=||Z_patch-Z_clean||_F/max(||Z_clean||_F,eps)。Tail-AV 在完整 valid key 集上做 softmax，再切出 visual-token 列且不重新归一化；I=A_visual*||V_visual||_2。分数是每个 task 上 patched/clean top 0.5% influence 均值的 log ratio，再对 task 等权平均。排序按 score 降序、layer ID 升序打破并列，不使用 rollout 结果。
 

@@ -1,6 +1,6 @@
-# PASA-KV (anonymous code snapshot)
+# PASA-KV reference implementation
 
-This repository contains a compact, model-agnostic reference implementation of the method described in *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models*. It is prepared without author, institution, machine, or private-storage metadata.
+This package contains a compact, model-agnostic reference implementation of the method described in *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models*.
 
 ## Method
 
@@ -62,8 +62,8 @@ pytest
 
 No end-to-end simulator command is supplied until upstream adapters and revisions are audited. FastWAM checkpoint release is planned separately through Hugging Face; this repository contains no .pt files.
 
-## Anonymous release status
+## Release scope
 
-This snapshot has no Git history, result ledgers, private paths, TOS credentials, model weights, or author metadata. Upstream model code is external and is not relicensed here. No repository license is assigned yet; select one and audit compatibility before public release.
+This package contains no model weights, dataset, simulator assets, or end-to-end victim-model integration. Upstream model code is external and is not relicensed here. No repository license is assigned yet; select one and audit compatibility before public release.
 
 The submitted manuscript distinguishes run labels and seeds: primary pipeline label 42; Probe100 stability seeds 42-44; a separate singleton layerwise configuration records seed 20260801. Cosmos Eval500 extensions are documented with seed 195. Keep distinct runs/configurations separate.
