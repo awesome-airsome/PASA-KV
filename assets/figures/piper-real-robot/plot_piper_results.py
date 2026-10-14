@@ -4,8 +4,9 @@ import csv
 import html
 
 ROOT = Path(__file__).resolve().parent
-INK, MUTED, GRID = '#263746', '#657782', '#E0E6E9'
-COLORS = {'Clean FastWAM':'#929DA2','PASA-KV Top-3':'#EFA01B','PASA-KV Top-5':'#E45B59'}
+INK, MUTED, GRID = '#253744', '#617582', '#E3E8EB'
+CLEAN, BASE, OUR = '#A4AFB5', '#7997AB', '#E45B59'
+COLORS = {'Clean FastWAM':CLEAN,'PASA-KV Top-3':OUR,'PASA-KV Top-5':OUR}
 
 def rows(name):
     with (ROOT/name).open(newline='', encoding='utf-8') as f:
@@ -22,7 +23,7 @@ def text(x,y,s,size=14,color=INK,weight=400,anchor='start'):
 
 s=['''<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="850" viewBox="0 0 1440 850" role="img" aria-labelledby="title desc">
 <title id="title">Piper real-robot closed-loop results</title><desc id="desc">PASA-KV Top-3 and Top-5 success rates across three AgileX Piper tasks and baseline success on bowl stacking. Ten trials per condition with 95 percent Wilson intervals.</desc>
-<rect width="1440" height="850" fill="#F7F9FA"/><style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>''',
+<rect width="1440" height="850" fill="#FAFBFC"/><style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>''',
 text(58,65,'Piper real-robot closed-loop results',30,INK,700),
 text(60,101,'AgileX Piper  ·  10 in-distribution trials per condition  ·  95% Wilson intervals',14,MUTED)]
 for x,w in [(50,650),(715,675)]:
@@ -60,7 +61,7 @@ for tick in (0,25,50,75,100):
 s.append(text(x0+w/2,719,'Policy success rate (%)',12,MUTED,500,'middle'))
 for i,r in enumerate(rows('table36_bowl_baselines.csv')):
     k,n=int(r['successes']),int(r['trials']); value=100*k/n; low,high=ci(k,n); y=267+i*48
-    name=r['method']; color=COLORS.get(name,'#B6C0C4')
+    name=r['method']; color=COLORS.get(name,BASE)
     s.append(text(744,y+5,name,13,INK,700 if name.startswith('PASA-KV') else 500))
     xx=x0+w*value/100; xl=x0+w*low/100; xh=x0+w*high/100
     s += [f'<rect x="{x0}" y="{y-8}" width="{max(1,xx-x0)}" height="16" rx="4" fill="{color}"/>',

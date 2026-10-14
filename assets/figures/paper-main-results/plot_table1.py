@@ -4,9 +4,9 @@ import csv
 import html
 
 ROOT=Path(__file__).resolve().parent
-INK='#263746'; MUTED='#657782'; GRID='#E0E6E9'
-BLUE='#3979B8'; CLEAN='#B9C1C5'; TOP3='#EFA01B'; TOP4='#F4C45C'; TOP5='#E45B59'
-COLORS={'Shared clean reference':CLEAN,'PASA-KV Top-3':TOP3,'PASA-KV Top-4':TOP4,'PASA-KV Top-5':TOP5}
+INK='#253744'; MUTED='#617582'; GRID='#E3E8EB'
+BASE='#7997AB'; CLEAN='#A4AFB5'; OUR='#E45B59'
+COLORS={'Shared clean reference':CLEAN,'PASA-KV Top-3':OUR,'PASA-KV Top-4':OUR,'PASA-KV Top-5':OUR}
 MODELS=[('FastWAM','fastwam_policy_sr','fastwam_gpu_h',12),('LingBot-VA','lingbot_policy_sr','lingbot_gpu_h',10),('Cosmos Policy','cosmos_policy_sr','cosmos_gpu_h',25)]
 
 def label(x,y,value,size=13,color=INK,weight=400,anchor='start'):
@@ -15,20 +15,20 @@ def label(x,y,value,size=13,color=INK,weight=400,anchor='start'):
 with (ROOT/'table1_results.csv').open(newline='',encoding='utf-8') as f:
     data=list(csv.DictReader(f))
 methods=[r['method'] for r in data]
-def color(method): return COLORS.get(method,BLUE)
+def color(method): return COLORS.get(method,BASE)
 
 s=['''<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1200" viewBox="0 0 1500 1200" role="img" aria-labelledby="title desc">
-<title id="title">Primary comparison results from manuscript Table 1</title><desc id="desc">Horizontal bar charts compare policy success rates and patch construction GPU hours for FastWAM, LingBot-VA, and Cosmos Policy. Lower success rate means a stronger attack.</desc><rect width="1500" height="1200" fill="#F7F9FA"/><style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>''',
+<title id="title">Primary comparison results from manuscript Table 1</title><desc id="desc">Horizontal bar charts compare policy success rates and patch construction GPU hours for FastWAM, LingBot-VA, and Cosmos Policy. Lower success rate means a stronger attack.</desc><rect width="1500" height="1200" fill="#FAFBFC"/><style>text{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}</style>''',
 label(56,62,'Primary results across world action models',30,INK,700),
 label(58,97,'Paper Table 1  ·  LIBERO-10 Eval500 (10 tasks × 50 trials)  ·  lower policy SR indicates a stronger attack',14,MUTED)]
 
 xs=[50,540,1030]; pw=460; rows_top=221; gap=29; methods_y=range(len(methods))
 # Legend
-legend=[('WAM-adapted baselines',BLUE),('Shared clean reference',CLEAN),('PASA-KV Top-3',TOP3),('PASA-KV Top-4',TOP4),('PASA-KV Top-5',TOP5)]
+legend=[('WAM-adapted baselines',BASE),('Shared clean reference',CLEAN),('PASA-KV Top-k',OUR)]
 pos=56
 for name,c in legend:
     s += [f'<rect x="{pos}" y="119" width="14" height="14" rx="3" fill="{c}"/>',label(pos+21,131,name,12,MUTED,500)]
-    pos += {'WAM-adapted baselines':205,'Shared clean reference':195,'PASA-KV Top-3':145,'PASA-KV Top-4':145,'PASA-KV Top-5':145}[name]
+    pos += {'WAM-adapted baselines':205,'Shared clean reference':195,'PASA-KV Top-k':145}[name]
 
 # Policy SR panels.
 for x,(model,srcol,costcol,costmax) in zip(xs,MODELS):

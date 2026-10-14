@@ -1,6 +1,6 @@
 # Full results and diagnostics
 
-These assets follow the supplied manuscript, *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models*. Paper figures are extracted from the PDF; bar charts are generated from the reported table values.
+These assets follow the supplied manuscript, *PASA-KV: Attacking Action-Facing Visual Routes in World Action Models*. The charts below use the same grey, grey-blue, and coral palette as the README. Original manuscript figures remain linked for the detailed diagnostics.
 
 ## Primary comparisons and construction costs
 
@@ -12,15 +12,13 @@ Policy SR is task success, so lower is a stronger attack. GPU-hours are recorded
 
 ## Layerwise evidence
 
-![Manuscript Figure 1](../assets/figures/paper-2026-09/fig1_layerwise.png)
+![Matched target-selection controls](../assets/figures/readme/selection_controls.svg)
 
-Different singleton target layers have different success rates under the same attack budget. Tail-AV scores come from short probes; the response-group colors are retrospective diagnostic labels and are not selector inputs.
+The matched selection controls compare routes selected using action readouts with probe K/V displacement and other controls. [Original manuscript Figure 1](../assets/figures/paper-2026-09/fig1_layerwise.png) shows the full layerwise probe and rollout diagnostics, including the retrospective response groups. Those groups are not selector inputs.
 
 ## Action-response diagnostics
 
-![Manuscript Figure 3](../assets/figures/paper-2026-09/fig3_diagnostics.png)
-
-The four panels concern different protocols: (a) action discrepancy versus task success across six FastWAM baseline patches; (b) one-shot versus persistent patch exposure; (c) LingBot history-conditioned responses; (d) Cosmos input extent and joint solver steps. Action discrepancy provides diagnostic evidence but does not replace closed-loop evaluation. The paper discusses protocol details in Appendices C.1 and D.3–D.5.
+[Original manuscript Figure 3](../assets/figures/paper-2026-09/fig3_diagnostics.png) contains four diagnostic panels with different protocols: (a) action discrepancy versus task success across six FastWAM baseline patches; (b) one-shot versus persistent patch exposure; (c) LingBot history-conditioned responses; (d) Cosmos input extent and joint solver steps. Action discrepancy provides diagnostic evidence but does not replace closed-loop evaluation. The paper discusses protocol details in Appendices C.1 and D.3–D.5.
 
 ## Piper real-robot outcomes
 
