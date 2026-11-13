@@ -1,5 +1,7 @@
 # PASA-KV: Attacking Action-Facing Visual Routes in World Action Models
 
+[**Project Page**](https://awesome-airsome.github.io/PASA-KV-ProjectPage/) · [**Paper (arXiv)**](https://arxiv.org/abs/2610.39816)
+
 **PASA-KV is a white-box visual patch attack on world-action models (WAMs).** It uses short probes and the Tail-AV score to locate action-facing key/value (K/V) routes, then trains a fresh task-shared RGB patch against those routes.
 
 Internal representation change, action response, and closed-loop task failure are different quantities. Our experiments show that target-layer choice strongly affects control outcomes, and that short readout-aware probes can identify useful attack targets without using rollout success for selection.
